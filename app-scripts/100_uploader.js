@@ -28,13 +28,13 @@ function update_existing_board(trello, board) {
   var rows=sheet.getDataRange().getValues();
   var current_list = null;
   var row_by_id = {};
+  var last_row=0;
 
   for (j=1;j<rows.length;j++) {
     var list_name = rows[j][0];
     var card_id = rows[j][1];
     var card_name = rows[j][2];
     var card_description = rows[j][3];
-    var last_row=0;
     var label_colors = ['yellow', 'purple', 'blue', 'red',
                         'green', 'orange', 'black', 'sky',
                         'pink', 'lime', 'null'];

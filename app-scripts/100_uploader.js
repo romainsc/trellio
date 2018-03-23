@@ -46,9 +46,9 @@ function update_existing_board(trello, board) {
     
     current_list = board.get_or_create_list(list_name);
     if (card_id != "") {
-      card = current_list.get_card(card_id); // Limitation: unable to move a card to another list.
+      card = current_list.get_card(card_id); 
       if(card == null) {
-        card = trello.get_card(card_id); // Limitation: moving a card create a clone from the spreadsheet version.
+        card = trello.get_card(card_id);
       };
       row_by_id[card_id] = j+1;
     } else {

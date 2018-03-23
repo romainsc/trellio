@@ -25,6 +25,16 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
+  get_create_post_payload: {
+      value: function() {
+        var payload = TrelloBoardedObject.prototype.get_create_post_payload.call(this);
+        payload["pos"] = "bottom";
+        return payload;
+      },
+      enumerable: true,
+      configurable: false,
+      writable: false
+    },
   append_card: {
     value: function(card) {
       card.list_id = this.id;

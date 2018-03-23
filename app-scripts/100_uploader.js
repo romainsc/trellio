@@ -52,8 +52,10 @@ function update_existing_board(trello, board) {
       };
       row_by_id[card_id] = j+1;
     } else {
-      card = new TrelloCard();
-      current_list.append_card(card);
+      if (card_name != "") {
+        card = new TrelloCard();
+        current_list.append_card(card);
+      };
     };
     card.name = card_name;
     card.description = card_description;

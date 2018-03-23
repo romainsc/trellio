@@ -8,7 +8,7 @@ TrelloObject.prototype = Object.create(TrelloObject.prototype, {
     value: function(object_dict) {
       this.id = object_dict["id"];
       this.name = object_dict["name"];
-      if (object_dict["description"]) {
+      if (object_dict["desc"] != "") {
         this.description = object_dict["desc"];
       };
     },

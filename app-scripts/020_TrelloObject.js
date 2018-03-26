@@ -3,7 +3,7 @@ function TrelloObject(object_dict) {
     this.update(object_dict);
   };
 };
-TrelloObject.prototype = Object.create(TrelloObject.prototype, {
+TrelloObject.prototype = Object.create(Object.prototype, {
   update: {
     value: function(object_dict) {
       this.id = object_dict["id"];

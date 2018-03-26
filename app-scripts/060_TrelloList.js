@@ -13,6 +13,16 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
+  get_create_post_payload: {
+    value: function() {
+      var payload = TrelloBoardedObject.prototype.get_create_post_payload.call(this);
+      payload["pos"] = "bottom";
+      return payload;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
   update_cards: {
     value: function(cards) {
       this.cards = cards;
@@ -25,16 +35,6 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
-  get_create_post_payload: {
-      value: function() {
-        var payload = TrelloBoardedObject.prototype.get_create_post_payload.call(this);
-        payload["pos"] = "bottom";
-        return payload;
-      },
-      enumerable: true,
-      configurable: false,
-      writable: false
-    },
   append_card: {
     value: function(card) {
       card.list_id = this.id;
@@ -61,11 +61,34 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
-  cards: {
+  _cards: {
     value: null,
     enumerable: true,
     configurable: true,
     writable: true
-  }
+  },
+  cards: {
+    enumerable: true,
+    configurable: true,
+    set: function(cards) {
+      if(cards.length == this._cards.length) {
+        for(var i=0; i<cards.length && !this._dirty; i++) {
+          for(var j=0; j<this._cards.length && !this._dirty; j++) {
+            if(!cards[i].same_as(this._cards[j])) {
+              this._dirty = true;
+            };
+          };
+        };
+      } else {
+        this._dirty = true;
+      };
+      if(this._dirty) {
+        this._cards = cards;
+      };
+    },
+    get: function() {
+      return this._cards;
+    }
+  },
 });
 TrelloList.prototype.constructor = TrelloList;

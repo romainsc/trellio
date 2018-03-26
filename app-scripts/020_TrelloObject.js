@@ -8,7 +8,7 @@ TrelloObject.prototype = Object.create(Object.prototype, {
     value: function(object_dict) {
       this.id = object_dict["id"];
       this.name = object_dict["name"];
-      if (object_dict["desc"] != "") {
+      if (object_dict["desc"]!="") {
         this.description = object_dict["desc"];
       };
     },
@@ -60,23 +60,68 @@ TrelloObject.prototype = Object.create(Object.prototype, {
     configurable: false,
     writable: false
   },
-  id: {
+  _id: {
     value: "",
     enumerable: true,
     configurable: false,
     writable: true
   },
+  id: {
+    enumerable: true,
+    configurable: false,
+    set: function(id) {
+      if(this._id != id) {
+        this._id = id;
+        this._dirty = true;
+      };
+    },
+    get: function() {
+      return this._id;
+    }
+  },
   name: {
+    enumerable: true,
+    configurable: false,
+    set: function(name) {
+      if(this._name != name) {
+        this._name = name;
+        this._dirty = true;
+      };
+    },
+    get: function() {
+      return this._name;
+    }
+  },
+  _dirty: {
+    value: false,
+    enumerable: true,
+    configurable: false,
+    writable: true
+  },
+  _name: {
+    value: "",
+    enumerable: false,
+    configurable: false,
+    writable: true
+  },
+  _description: {
     value: "",
     enumerable: true,
     configurable: false,
     writable: true
   },
   description: {
-    value: "",
     enumerable: true,
     configurable: false,
-    writable: true
+    set: function(description) {
+      if(this._description != description) {
+        this._description = description;
+        this._dirty = true;
+      };
+    },
+    get: function() {
+      return this._description;
+    }
   }
 });
 TrelloObject.prototype.constructor = TrelloObject;

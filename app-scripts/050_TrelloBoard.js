@@ -53,17 +53,63 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
     configurable: false,
     writable: false
   },
-  labels: {
+  _labels: {
     value: null,
     enumerable: true,
     configurable: true,
     writable: true
   },
-  lists: {
+  _lists: {
     value: null,
     enumerable: true,
     configurable: true,
     writable: true
+  },
+  labels: {
+    enumerable: true,
+    configurable: true,
+    set: function(labels) {
+      if(labels.length == this._labels.length) {
+        for(var i=0; i<labels.length && !this._dirty; i++) {
+          for(var j=0; j<this._labels.length && !this._dirty; j++) {
+            if(!labels[i].same_as(this._labels[j])) {
+              this._dirty = true;
+            };
+          };
+        };
+      } else {
+        this._dirty = true;
+      };
+      if(this._dirty) {
+        this._labels = labels;
+      };
+    },
+    get: function() {
+      return this._labels;
+    }
+  },
+  lists: {
+    enumerable: true,
+    configurable: true,
+    set: function(lists) {
+      if(lists.length == this._lists.length) {
+        for(var i=0; i<lists.length && !this._dirty; i++) {
+          for(var j=0; j<this._lists.length && !this._dirty; j++) {
+            if(!lists[i].same_as(this._lists[j])) {
+              this._dirty = true;
+            };
+          };
+        };
+      } else {
+        this._dirty = true;
+      };
+      if(this._dirty) {
+        this._lists = lists;
+      };
+    },
+    get: function() {
+      return this._lists;
+    }
   },
   url: {
     value: null,

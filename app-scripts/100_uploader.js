@@ -129,4 +129,3 @@ function update_card_row(sheet, row, list_name, card) {
   var range = sheet.getRange(row,1,1,15);
   range.setValues([card_row]);
 };
-

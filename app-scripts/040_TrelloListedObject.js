@@ -23,11 +23,24 @@ TrelloListedObject.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
-  list_id: {
+  _list_id: {
     value: "",
     enumerable: true,
     configurable: false,
     writable: true
+  },
+  list_id: {
+    enumerable: true,
+    configurable: false,
+    set: function(list_id) {
+      if(this._list_id != list_id) {
+        this._list_id = list_id;
+        this._dirty = true;
+      };
+    },
+    get: function() {
+      return this._list_id;
+    }
   }
 });
 TrelloListedObject.prototype.constructor = TrelloListedObject;

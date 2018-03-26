@@ -23,11 +23,24 @@ TrelloBoardedObject.prototype = Object.create(TrelloObject.prototype, {
     configurable: false,
     writable: false
   },
-  board_id: {
+  _board_id: {
     value: "",
     enumerable: true,
     configurable: false,
     writable: true
+  },
+  board_id: {
+    enumerable: true,
+    configurable: false,
+    set: function(board_id) {
+      if(this._board_id != board_id) {
+        this._board_id = board_id;
+        this._dirty = true;
+      };
+    },
+    get: function() {
+      return this._board_id;
+    }
   }
 });
 TrelloBoardedObject.prototype.constructor = TrelloBoardedObject;

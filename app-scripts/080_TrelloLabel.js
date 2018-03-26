@@ -22,11 +22,24 @@ TrelloLabel.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
-  color: {
+  _color: {
     value: "",
     enumerable: true,
     configurable: true,
     writable: true
+  },
+  color: {
+    enumerable: true,
+    configurable: true,
+    set: function(color) {
+      if(this._color != color) {
+        this._color = color;
+        this._ = true;
+      };
+    },
+    get: function() {
+      return this._color;
+    }
   }
 });
 TrelloLabel.prototype.constructor = TrelloLabel;

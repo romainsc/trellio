@@ -27,8 +27,7 @@ function update_existing_board(trello, board) {
   var lists = {};
   var rows=sheet.getDataRange().getValues();
   var current_list = null;
-  var row_by_id = {};
-  var last_row=1;
+  var cards_in_row = [];
 
   for (j=1;j<rows.length;j++) {
     var list_name = rows[j][0];
@@ -43,6 +42,8 @@ function update_existing_board(trello, board) {
     var labels_name;
     var label;
     var card;
+    var existing_card = false;
+    var card_row_index = 0;
     
     current_list = board.get_or_create_list(list_name);
     if (card_id != "") {
@@ -50,13 +51,13 @@ function update_existing_board(trello, board) {
       if(card == null) {
         card = trello.get_card(card_id);
       };
-      row_by_id[card_id] = j+1;
     } else {
       if (card_name != "") {
         card = new TrelloCard();
         current_list.append_card(card);
       };
     };
+    cards_in_row.push(card);
     card.name = card_name;
     card.description = card_description;
     
@@ -74,20 +75,25 @@ function update_existing_board(trello, board) {
       };
       i = i+1;
     };
-    last_row = j+1;
   };
   board = trello.update_board(board);
-  
   
   for(i in board.lists) {
     current_list = board.lists[i];
     for(j in current_list.cards) {
       card = current_list.cards[j];
-      if (!(card.id in row_by_id)) {
-        row_by_id[card.id] = last_row+1;
-        last_row = last_row+1;
+      existing_card = false;
+      for(var row=0; row < cards_in_row.length; row++) {
+        if(cards_in_row[row].id == card.id) {
+          existing_card = true ;
+          card_row_index = row;
+        };
       };
-      update_card_row(sheet, row_by_id[card.id], current_list.name, card);
+      if (!existing_card) {
+        cards_in_row.push(card);
+        card_row_index = cards_in_row.length;
+      }
+      update_card_row(sheet, card_row_index+2, current_list.name, card);
     };
   };
 };

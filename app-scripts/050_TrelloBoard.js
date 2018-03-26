@@ -1,6 +1,6 @@
 function TrelloBoard(board_dict) {
   TrelloObject.call(this, board_dict);
-  this.lists = {};
+  this._lists = {};
 };
 
 TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
@@ -39,13 +39,14 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
   get_or_create_list: {
     value: function(list_name) {
       var list;
-      if (list_name in this.lists) {
-        list = this.lists[list_name];
+      if (list_name in this._lists) {
+        list = this._lists[list_name];
       } else {
         list = new TrelloList();
         list.board_id = this.id;
         list.name = list_name;
-        this.lists[list_name] = list;
+        this._lists[list_name] = list;
+        this._dirty = true;
       };
       return list;
     },

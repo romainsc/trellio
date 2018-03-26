@@ -1,6 +1,6 @@
 function TrelloList(list_dict) {
   TrelloBoardedObject.call(this, list_dict);
-  this.cards = new Array();
+  this._cards = new Array();
 };
 
 TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
@@ -25,11 +25,12 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
   },
   update_cards: {
     value: function(cards) {
-      this.cards = cards;
-      for(var i in this.cards) {
-        this.cards[i].list_id = this.id;
-        this.cards[i].board_id = this.board_id;
+      var new_cards = cards;
+      for(var i in new_cards) {
+        new_cards[i].list_id = this.id;
+        new_cards[i].board_id = this.board_id;
       }
+      this.cards = new_cards;
     },
     enumerable: true,
     configurable: false,
@@ -40,7 +41,8 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
       card.list_id = this.id;
       card.board_id = this.board_id;
       card.update_labels();
-      this.cards.push(card);
+      this._cards.push(card);
+      this._dirty = true;
       return card;
     },
     enumerable: true,
@@ -50,9 +52,9 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
   get_card: {
     value: function(card_id) {
       var card = null;
-      for(var i in this.cards) {
-        if(this.cards[i].id == card_id) {
-          card = this.cards[i];
+      for(var i in this._cards) {
+        if(this._cards[i].id == card_id) {
+          card = this._cards[i];
         };
       };
       return card;

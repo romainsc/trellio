@@ -1,5 +1,5 @@
 function TrelloCard(card_dict) {
-  this.labels = {};
+  this._labels = {};
   TrelloListedObject.call(this, card_dict);
 };
 TrelloCard.prototype = Object.create(TrelloListedObject.prototype, {
@@ -36,14 +36,15 @@ TrelloCard.prototype = Object.create(TrelloListedObject.prototype, {
   },
   update_labels: {
     value: function(labels) {
+      var new_labels = {};
       if(labels == undefined) {
         labels = this.labels;
       };
-      this.labels = {};
       for (var i in labels) {
-        this.labels[labels[i].name] = labels[i];
-        this.labels[labels[i].name].board_id = this.board_id;
+        new_labels[labels[i].name] = labels[i];
+        new_labels[labels[i].name].board_id = this.board_id;
       };
+      this.labels = new_labels;
     },
     enumerable: true,
     configurable: false,
@@ -58,7 +59,8 @@ TrelloCard.prototype = Object.create(TrelloListedObject.prototype, {
         label = new TrelloLabel();
         label.board_id = this.board_id;
         label.name = label_name;
-        this.labels[label_name] = label;
+        this._labels[label_name] = label;
+        this._dirty = true;
       };
       return label;
     },

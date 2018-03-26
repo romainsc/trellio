@@ -159,8 +159,10 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
   },
   update_object: {
     value: function(rel_path, object) {
-      var object_dict = this._trello_put(rel_path, object.get_update_put_payload());
-      object.update(object_dict);
+      if(object.is_dirty()) {
+        var object_dict = this._trello_put(rel_path, object.get_update_put_payload());
+        object.update(object_dict);
+      };
       return object;
     },
     enumerable: true,

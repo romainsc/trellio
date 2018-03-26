@@ -1,6 +1,7 @@
 function TrelloObject(object_dict) {
   if(object_dict != undefined) {
     this.update(object_dict);
+    this._dirty = false;
   };
 };
 TrelloObject.prototype = Object.create(Object.prototype, {
@@ -97,6 +98,14 @@ TrelloObject.prototype = Object.create(Object.prototype, {
     enumerable: true,
     configurable: false,
     writable: true
+  },
+  is_dirty: {
+    value: function() {
+      return this._dirty;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
   },
   _name: {
     value: "",

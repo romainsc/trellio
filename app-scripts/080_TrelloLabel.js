@@ -40,6 +40,16 @@ TrelloLabel.prototype = Object.create(TrelloBoardedObject.prototype, {
     get: function() {
       return this._color;
     }
+  },
+  same_as: {
+    value: function(obj) {
+      var same =  TrelloBoardedObject.prototype.same_as.call(this, obj);
+      same = same && this.color == obj.color;
+      return same;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
   }
 });
 TrelloLabel.prototype.constructor = TrelloLabel;

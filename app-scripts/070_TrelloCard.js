@@ -76,24 +76,24 @@ TrelloCard.prototype = Object.create(TrelloListedObject.prototype, {
     enumerable: true,
     configurable: true,
     set: function(labels) {
-      if(labels.length == this._labels.length) {
-        for(var i=0; i<labels.length && !this._dirty; i++) {
-          for(var j=0; j<this._labels.length && !this._dirty; j++) {
-            if(!labels[i].same_as(this._labels[j])) {
-              this._dirty = true;
-            };
-          };
-        };
-      } else {
+      if(!this.same_array(this._labels, labels)) {
         this._dirty = true;
-      };
-      if(this._dirty) {
         this._labels = labels;
       };
     },
     get: function() {
       return this._labels;
     }
+  },
+  same_as: {
+    value: function(obj) {
+      var same =  TrelloListedObject.prototype.same_as.call(this, obj);
+      same = same && this.same_array(this._labels, obj.labels);
+      return same;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
   }
 });
 TrelloCard.prototype.constructor = TrelloCard;

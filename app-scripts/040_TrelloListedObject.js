@@ -41,6 +41,16 @@ TrelloListedObject.prototype = Object.create(TrelloBoardedObject.prototype, {
     get: function() {
       return this._list_id;
     }
+  },
+  same_as: {
+    value: function(obj) {
+      var same =  TrelloBoardedObject.prototype.same_as.call(this, obj);
+      same = same && this.list_id == obj.list_id;
+      return same;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
   }
 });
 TrelloListedObject.prototype.constructor = TrelloListedObject;

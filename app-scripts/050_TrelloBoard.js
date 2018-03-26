@@ -69,18 +69,8 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
     enumerable: true,
     configurable: true,
     set: function(labels) {
-      if(labels.length == this._labels.length) {
-        for(var i=0; i<labels.length && !this._dirty; i++) {
-          for(var j=0; j<this._labels.length && !this._dirty; j++) {
-            if(!labels[i].same_as(this._labels[j])) {
-              this._dirty = true;
-            };
-          };
-        };
-      } else {
+      if(!this.same_array(this._labels, labels)) {
         this._dirty = true;
-      };
-      if(this._dirty) {
         this._labels = labels;
       };
     },
@@ -92,18 +82,8 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
     enumerable: true,
     configurable: true,
     set: function(lists) {
-      if(lists.length == this._lists.length) {
-        for(var i=0; i<lists.length && !this._dirty; i++) {
-          for(var j=0; j<this._lists.length && !this._dirty; j++) {
-            if(!lists[i].same_as(this._lists[j])) {
-              this._dirty = true;
-            };
-          };
-        };
-      } else {
+      if(!this.same_array(this._lists, lists)) {
         this._dirty = true;
-      };
-      if(this._dirty) {
         this._lists = lists;
       };
     },
@@ -120,6 +100,17 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
   get_anchored_name: {
     value: function() {
       return '<a target="_blank" href="'+this.url+'">'+this.name+'</a>';
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
+  same_as: {
+    value: function(obj) {
+      var same =  TrelloObject.prototype.same_as.call(this, obj);
+      same = same && this.same_array(this._lists, obj.lists);
+      same = same && this.same_array(this._labels, obj.labels);
+      return same;
     },
     enumerable: true,
     configurable: false,

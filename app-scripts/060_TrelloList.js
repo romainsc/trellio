@@ -71,24 +71,24 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     enumerable: true,
     configurable: true,
     set: function(cards) {
-      if(cards.length == this._cards.length) {
-        for(var i=0; i<cards.length && !this._dirty; i++) {
-          for(var j=0; j<this._cards.length && !this._dirty; j++) {
-            if(!cards[i].same_as(this._cards[j])) {
-              this._dirty = true;
-            };
-          };
-        };
-      } else {
-        this._dirty = true;
-      };
-      if(this._dirty) {
-        this._cards = cards;
+      if(!this.same_array(this._cards, cards)) {
+         this._dirty = true;
+         this._cards = cards;
       };
     },
     get: function() {
       return this._cards;
     }
   },
+  same_as: {
+    value: function(obj) {
+      var same =  TrelloBoardedObject.prototype.same_as.call(this, obj);
+      same = same && this.same_array(this._cards, obj.cards);
+      return same;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  }
 });
 TrelloList.prototype.constructor = TrelloList;

@@ -122,6 +122,36 @@ TrelloObject.prototype = Object.create(Object.prototype, {
     get: function() {
       return this._description;
     }
+  },
+  same_array: {
+    value: function(array) {
+      var same_array = true;
+      if(lists.length == this._lists.length) {
+        for(var i=0; i<lists.length && same_array; i++) {
+          for(var j=0; j<this._lists.length && same_array; j++) {
+            if(!lists[i].same_as(this._lists[j])) {
+              same_array = false;
+            };
+          };
+        };
+      };
+      return same_array;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
+  same_as: {
+    value: function(obj) {
+      var same = true;
+      same = same && this.id == obj.id;
+      same = same && this.name == obj.name;
+      same = same && this.description == obj.description;
+      return same;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
   }
 });
 TrelloObject.prototype.constructor = TrelloObject;

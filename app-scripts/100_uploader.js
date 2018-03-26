@@ -41,11 +41,12 @@ function update_existing_board(trello, board) {
     var labels_string;
     var labels_name;
     var label;
-    var card;
+    var card = null;
     var existing_card = false;
     var card_row_index = 0;
     
     current_list = board.get_or_create_list(list_name);
+    
     if (card_id != "") {
       card = current_list.get_card(card_id); 
       if(card == null) {
@@ -57,9 +58,11 @@ function update_existing_board(trello, board) {
         current_list.append_card(card);
       };
     };
-    cards_in_row.push(card);
-    card.name = card_name;
-    card.description = card_description;
+    if (card != null) {
+      cards_in_row.push(card);
+      card.name = card_name;
+      card.description = card_description;
+    };
     
     var labels = {};
     for (var color_index in label_colors) { 
@@ -126,3 +129,4 @@ function update_card_row(sheet, row, list_name, card) {
   var range = sheet.getRange(row,1,1,15);
   range.setValues([card_row]);
 };
+

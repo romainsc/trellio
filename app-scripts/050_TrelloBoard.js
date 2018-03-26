@@ -7,7 +7,6 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
   update: {
     value: function(board_dict) {
       TrelloObject.prototype.update.call(this, board_dict);
-      this.is_closed = board_dict["closed"];
       this.url = board_dict["url"];
     },
     enumerable: true,
@@ -53,12 +52,6 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
     enumerable: true,
     configurable: false,
     writable: false
-  },
-  is_closed: {
-    value: false,
-    enumerable: true,
-    configurable: false,
-    writable: true
   },
   labels: {
     value: null,

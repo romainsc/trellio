@@ -124,12 +124,14 @@ TrelloObject.prototype = Object.create(Object.prototype, {
     }
   },
   same_array: {
-    value: function(array) {
+    value: function(a, b) {
       var same_array = true;
-      if(lists.length == this._lists.length) {
-        for(var i=0; i<lists.length && same_array; i++) {
-          for(var j=0; j<this._lists.length && same_array; j++) {
-            if(!lists[i].same_as(this._lists[j])) {
+      if(a == null || b == null || a.length != b.length) {
+        same_array = false;
+      } else {
+        for(var i=0; i<a.length && same_array; i++) {
+          for(var j=0; j<b.length && same_array; j++) {
+            if(!a[i].same_as(b[j])) {
               same_array = false;
             };
           };

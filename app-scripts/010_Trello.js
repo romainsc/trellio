@@ -37,6 +37,7 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
     value: function(board_dict) {
       var board = this._get_board_meta_only_from_dict(board_dict);
       board.update_lists(this.get_lists(board.id));
+      board._dirty = false;
       return board;
     },
     enumerable: true,
@@ -47,7 +48,8 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
     value: function(card_dict) {
       var card;
       card = new TrelloCard(card_dict);
-      return board;
+      card._dirty = false;
+      return card;
     },
     enumerable: true,
     configurable: false,
@@ -58,6 +60,7 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
       var list;
       list = new TrelloList(list_dict);
       list.update_cards(this.get_cards_in_list(list.id));
+      list._dirty = false;
       return list;
     },
     enumerable: true,

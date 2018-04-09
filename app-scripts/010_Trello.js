@@ -55,10 +55,20 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
     configurable: false,
     writable: false
   },
-  _get_lists_from_dict: {
+  _get_list_meta_only_from_dict: {
     value: function(list_dict) {
       var list;
       list = new TrelloList(list_dict);
+      return list;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
+  _get_lists_from_dict: {
+    value: function(list_dict) {
+      var list;
+      list = this._get_list_meta_only_from_dict(list_dict);
       list.update_cards(this.get_cards_in_list(list.id));
       list._dirty = false;
       return list;
@@ -86,6 +96,15 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
   get_boards_meta_only: {
     value: function() {
       return this._get_objects_array(this._get_board_meta_only_from_dict,"members/me/boards");
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
+  get_list: {
+    value: function(list_id) {
+      var list_dict = this._trello_get("lists/"+list_id);
+      return this._get_list_meta_only_from_dict(list_dict);
     },
     enumerable: true,
     configurable: false,
@@ -133,6 +152,15 @@ Trello.prototype = Object.create(TrelloRest.prototype, {
     configurable: false,
     writable: false
   },
+  get_list_name: {
+    value: function(list_id) {
+      var list = this.get_list_meta_only(list_id);
+      return list;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },    
   get_boards_html_list: {
     value: function() {
       var boards = this.get_boards_meta_only();

@@ -27,8 +27,14 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     value: function(cards) {
       var new_cards = cards;
       for(var i in new_cards) {
-        new_cards[i].list_id = this.id;
-        new_cards[i].board_id = this.board_id;
+        if(new_cards[i].list_id != this.id) {
+          new_cards[i].list_id = this.id;
+          new_cards[i]._dirty = true; 
+        };
+        if(new_cards[i].board_id != this.board_id) {
+          new_cards[i].board_id = this.board_id;
+          new_cards[i]._dirty = true; 
+        };          
       }
       this.cards = new_cards;
     },

@@ -24,6 +24,20 @@ TrelloBoard.prototype = Object.create(TrelloObject.prototype, {
     configurable: false,
     writable: false
   },
+  move_card: {
+    value: function(card_id, dest_list) {
+      var card = null;
+      for (var current_list_name in this.lists) {
+        if (card == null) {
+          card = this.lists[current_list_name].pop_card(card_id);
+        };
+      };
+      dest_list.append_card(card);
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
   update_lists: {
     value: function(lists) {
       this.lists = {};

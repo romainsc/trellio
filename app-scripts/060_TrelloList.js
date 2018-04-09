@@ -55,6 +55,25 @@ TrelloList.prototype = Object.create(TrelloBoardedObject.prototype, {
     configurable: false,
     writable: false
   },
+  pop_card: {
+    value: function(card_id) {
+      var card = null;
+      var card_index = null;
+      for(var i in this._cards) {
+        if(this._cards[i].id == card_id) {
+          card = this._cards[i];
+          card_index = i;
+        };
+      };
+      if (card_index != null) {
+        this._cards.splice(card_index, 1);
+      };
+      return card;
+    },
+    enumerable: true,
+    configurable: false,
+    writable: false
+  },
   get_card: {
     value: function(card_id) {
       var card = null;

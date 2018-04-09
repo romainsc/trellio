@@ -51,6 +51,8 @@ function update_existing_board(trello, board) {
       card = current_list.get_card(card_id); 
       if(card == null) {
         card = trello.get_card(card_id);
+        card.list_id = current_list.id;
+        trello.update_card(card);
       };
     } else {
       if (card_name != "") {

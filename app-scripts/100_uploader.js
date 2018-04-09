@@ -50,7 +50,7 @@ function update_existing_board(trello, board) {
     if (card_id != "") {
       card = current_list.get_card(card_id); 
       if(card == null) {
-        card = trello.get_card(card_id);
+        board.move_card(card_id, current_list);
       };
     } else {
       if (card_name != "") {

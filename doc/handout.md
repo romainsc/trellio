@@ -133,7 +133,7 @@ added in the meantime since your last [[ -\> Synchronize
 ]](#h.muu0g9suw0pp) the common way should be
 
 1.  Use your spreadsheet with the information in the sheet Config as a skeleton
-2.  Empty all entries in the sheet “cards” 
+2.  Empty all entries in the sheet “cards”
 3.  Execute the Synchronize now - This will lead to a fresh and updated list of cards+
 4.  Inform other Trello boards users about the work in order to minimize loss of information when you Synchronize 
 5.  Make your changes
@@ -147,5 +147,3 @@ mind that the API details are sensitive information you definitely do
 NOT want to be shared!
 
 ![](images/image6.png)
-
-
